@@ -1,0 +1,13 @@
+# IDE / Editor
+.idea/
+.vscode/
+
+# Node/Bun
+node_modules/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+.terraform.lock.hcl
