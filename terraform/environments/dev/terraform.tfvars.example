@@ -1,0 +1,4 @@
+project_name      = "apprunner-cicd"
+github_repository = "cauecalil/aws-apprunner-ci-cd-pipeline"
+aws_region        = "us-east-2"
+environment       = "dev"
