@@ -1,0 +1,8 @@
+{
+    "name": "apprunner-demo-app",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "bun index.js",
+        "test": "bun test"
+    }
+}
