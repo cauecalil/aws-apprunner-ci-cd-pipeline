@@ -1,3 +1,3 @@
 output "service_url" {
-  value = module.apprunner.service_url
+  value = aws_apprunner_service.apprunner.service_url
 }

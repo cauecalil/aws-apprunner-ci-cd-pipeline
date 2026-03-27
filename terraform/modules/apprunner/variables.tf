@@ -3,7 +3,7 @@ variable "service_name" {
 }
 
 variable "container_port" {
-  type = string
+  type = number
 }
 
 variable "environment_variables" {
