@@ -8,20 +8,17 @@ terraform {
     }
   }
 
-  # backend "s3" {
-  #   bucket         = "terraform-state-bucket"
-  #   key            = "dev/terraform.tfstate"
-  #   region         = "us-east-2"
-  #   dynamodb_table = "terraform-locks"
-  # }
+  backend "s3" {
+    encrypt = true
+  }
 }
 
 provider "aws" {
-  region = var.aws_region
+  region = var.region
 
   default_tags {
     tags = {
-      Project     = var.github_repository
+      Project     = "${var.github_organization}/${var.github_repository}"
       Environment = var.environment
       ManagedBy   = "Terraform"
     }
