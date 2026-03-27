@@ -1,10 +1,3 @@
-module "github_oidc_provider" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-oidc-provider"
-  version = "6.4.0"
-
-  url = "https://token.actions.githubusercontent.com"
-}
-
 module "github_role" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role"
   version = "6.4.0"
@@ -46,7 +39,7 @@ module "github_policy" {
           "ecr:DescribeRepositories"
         ]
         Resource = [
-          "arn:aws:ecr:*:*:repository/${var.project_prefix}-*"
+          "arn:aws:ecr:*:*:repository/${var.project_prefix}*"
         ]
       },
       # AppRunner
@@ -60,7 +53,7 @@ module "github_policy" {
           "apprunner:ListServices"
         ]
         Resource = [
-          "arn:aws:apprunner:*:*:service/${var.project_prefix}-*"
+          "arn:aws:apprunner:*:*:service/${var.project_prefix}*"
         ]
       },
       # IAM
@@ -76,9 +69,38 @@ module "github_policy" {
           "iam:DeleteRolePolicy"
         ]
         Resource = [
-          "arn:aws:iam::*:role/${var.project_prefix}-*",
-          "arn:aws:iam::*:policy/${var.project_prefix}-*"
+          "arn:aws:iam::*:role/${var.project_prefix}*",
+          "arn:aws:iam::*:policy/${var.project_prefix}*"
         ]
+      },
+      # S3
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "s3:ListBucket",
+          "s3:GetBucketVersioning"
+        ],
+        "Resource" : "arn:aws:s3:::${var.s3_bucket}"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject"
+        ],
+        "Resource" : "arn:aws:s3:::${var.s3_bucket}/*"
+      },
+      # DynamoDB
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "dynamodb:PutItem",
+          "dynamodb:GetItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:UpdateItem"
+        ],
+        "Resource" : "arn:aws:dynamodb:*:*:table/${var.dynamodb_table}"
       }
     ]
   })
